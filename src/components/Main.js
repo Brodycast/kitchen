@@ -29,7 +29,6 @@ class AppComponent extends React.Component {
   }
 
   handleFinishOrder(key) {
-    console.log(key);
     let orderRef = firebase.database().ref(`order/${key}`);
     orderRef.update({ status: 'completed' });
   }
@@ -50,44 +49,52 @@ class AppComponent extends React.Component {
             <div className="row order"
               onClick={ this.handleFinishOrder.bind(this, order.key) }
               key={ order.key }>
-              <div className="col-lg-1 col-lg-offset-2">
+              <div className="col-lg-1 col-lg-offset-1 i_photo">
                 <img src={ order.photo } alt={ order.description } />
               </div>
-              <div className="col-lg-4">
-                <div>PEDIDO ATUAL</div>
-                <div className="description">{ order.description }</div>
-                <div>PARA</div>
-                <div className="usename">{ order.username }</div>
+              <div className="col-lg-3 d_food">
+                <div className="df_title">PEDIDO ATUAL</div>
+                <div className="df_name">{ order.description }</div>
+                <div className="df_title">PARA</div>
+                <div className="df_name">{ order.username }</div>
               </div>
-              <div className="col-lg-1">
-                <img src={ order.userphoto } alt={ order.username } />
+              <div className="col-lg-2 col-lg-offset1 d_mesa">
+                <div className="df_title">MESA</div>
+                <div className="dm_number">--</div>
               </div>
             </div>
           );
         }) }
         </div>
+        <div className="collection">
         { this.state.orders
           .filter((order) => order.status === 'ordered' )
           .map((order) => {
           return (
-            <div className="row order"
+            <a href="#" className="order collection-item"
               onClick={ this.handleFinishOrder.bind(this, order.key) }
               key={ order.key }>
-              <div className="col-lg-1 col-lg-offset-2">
+              <div className="row">
+              <div className="col-lg-1 col-lg-offset-1">
                 <img src={ order.photo } alt={ order.description } />
               </div>
-              <div className="col-lg-4">
+              <div className="col-lg-3">
                 <span className="description">{ order.description }</span>
               </div>
               <div className="col-lg-2">
                 <span className="usename">{ order.username }</span>
               </div>
               <div className="col-lg-1">
-                <img className="userphoto" src={ order.userphoto } alt={ order.username } />
+                <img className="roudend" src={ order.userphoto } alt={ order.username } />
               </div>
-            </div>
+              <div className="col-lg-3 col-lg-offset-1 date">
+              { (new Date(new Date().getTime() - order.datetime)).toString().split(' ')[4] }
+              </div>
+              </div>
+            </a>
           );
         }) }
+        </div>
       </div>
     );
   }
