@@ -2,16 +2,7 @@ require('normalize.css/normalize.css');
 require('styles/App.css');
 
 import React from 'react';
-import firebase from 'firebase';
-
-
-const config = {
-  apiKey: 'AIzaSyC0S74m9BXbVPYRjOUZXmwZneecdFJuhCc',
-  authDomain: 'brodycast.firebaseapp.com',
-  databaseURL: 'https://brodycast.firebaseio.com',
-  storageBucket: 'brodycast.appspot.com'
-};
-firebase.initializeApp(config);
+import firebase from '../database';
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -43,8 +34,11 @@ class AppComponent extends React.Component {
       <div className="index">
         { this.state.orders.map(order => {
           return (
-            <div>
-                {order}
+            <div className="order" key={ order.datetime }>
+              <img src={ order.photo } alt={ order.description } />
+              <span className="description">{ order.description }</span>
+              <span className="usename">{ order.username }</span>
+              <img src={ order.userphoto } alt={ order.username } />
               </div>
           );
         }) }
